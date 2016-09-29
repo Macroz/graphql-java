@@ -38,6 +38,7 @@ public abstract class ExecutionStrategy {
 
         Object resolvedValue = null;
         try {
+            countResolve();
             resolvedValue = fieldDef.getDataFetcher().get(environment);
         } catch (Exception e) {
             log.info("Exception while fetching data", e);
@@ -45,6 +46,10 @@ public abstract class ExecutionStrategy {
         }
 
         return completeValue(executionContext, fieldDef.getType(), fields, resolvedValue);
+    }
+
+    protected void countResolve() {
+        // by default don't keep track of resolves
     }
 
     protected ExecutionResult completeValue(ExecutionContext executionContext, GraphQLType fieldType, List<Field> fields, Object result) {
